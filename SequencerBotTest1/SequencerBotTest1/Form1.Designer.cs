@@ -28,27 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OutputLabel = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // OutputLabel
-            // 
-            this.OutputLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.OutputLabel.Location = new System.Drawing.Point(12, 9);
-            this.OutputLabel.Name = "OutputLabel";
-            this.OutputLabel.Size = new System.Drawing.Size(498, 129);
-            this.OutputLabel.TabIndex = 2;
-            this.OutputLabel.Text = "label1";
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 385);
-            this.Controls.Add(this.OutputLabel);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.ResumeLayout(false);
+      this.OutputLabel = new System.Windows.Forms.Label();
+      this.SuspendLayout();
+      // 
+      // OutputLabel
+      // 
+      this.OutputLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.OutputLabel.Location = new System.Drawing.Point(12, 9);
+      this.OutputLabel.Name = "OutputLabel";
+      this.OutputLabel.Size = new System.Drawing.Size(498, 129);
+      this.OutputLabel.TabIndex = 2;
+      this.OutputLabel.Text = "label1";
+      // 
+      // Form1
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.ClientSize = new System.Drawing.Size(522, 157);
+      this.Controls.Add(this.OutputLabel);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+      this.MaximizeBox = false;
+      this.Name = "Form1";
+      this.Text = "Sequencer Bot";
+      this.ResumeLayout(false);
 
         }
 
