@@ -22,6 +22,8 @@ namespace SequencerBotTest1
 
         private Boolean connected = false;
 
+        private Boolean playing = false;
+
         private System.Timers.Timer myTimer = new System.Timers.Timer();
 
         public Form1()
@@ -88,13 +90,9 @@ namespace SequencerBotTest1
 
         private void LoginandStart()
         {
-            //Auth.SetUserCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
-            
-
             try
             {
-                Auth.SetUserCredentials("PjrQTBBxU792e09klffO8r4NO", "01VNgL6YjVrPe5dbHDkOepdxC23hsa32pqlL2xIGLGPyMAZfZr", "716827397945827328-98tFDNfFAFhqhG6DbT9eKjPOdTrHX6Q", "VMmPvX6zUy7NxiMUsGyRKYStHFPTPXztqL9o4cSKDc9DE");
-
+                //Auth.SetUserCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
                 var authenticatedUser = User.GetAuthenticatedUser();
 
                 if (authenticatedUser == null)
@@ -112,7 +110,7 @@ namespace SequencerBotTest1
             var stream = Stream.CreateUserStream();
             stream.TweetCreatedByAnyoneButMe += stream_TweetReceived;
             stream.MessageReceived += stream_MessageReceived;
-            stream.StartStreamAsync();           
+            stream.StartStreamAsync();    
         }
 
 
@@ -139,7 +137,7 @@ namespace SequencerBotTest1
 
 
           Invoke(new Action(() =>
-              this.OutputLabel.Text = "Tweet received: " + received_message
+              this.OutputLabel.Text = "Message received: " + received_message
           ));
 
 
@@ -156,22 +154,80 @@ namespace SequencerBotTest1
             string[] words = text.Split(' ');
 
             for (int i=0; i < words.Length; i++)
-            {
-                if (words[i] == "volume") DoVolume(words[i+1]);
-                if (words[i] == "bpm") DoBPM(words[i+1]);                
+            { 
+                if (words[i] == "volume") DoVolume(words[i+1]); 
+                if (words[i] == "bpm") DoBPM(words[i+1]); 
+                if (words[i] == "kick") DoKick(words[i + 1]);
+                if (words[i] == "bass") DoBass(words[i + 1]);
+                if (words[i] == "synth") DoSynth(words[i + 1]);
+                if (words[i] == "drums") DoDrums(words[i + 1]);
+                if (words[i] == "stop") DoStop();
+                if (words[i] == "play") DoPlay();
             }            
         }
 
         private void DoVolume(string v)
         {
-            int vol = (int)long.Parse(v);
-            SendMIDI(ChannelCommand.Controller, 0, 1, vol);
+           int vol = ParamToCC(v);
+           SendMIDI(ChannelCommand.Controller, 0, 1, vol);
         }
 
         private void DoBPM(string arg)
         {
-            int bpm = (int)long.Parse(arg);
-            SendMIDI(ChannelCommand.Controller, 0, 2, bpm);
+          int bpm = ParamToCC(arg);
+          SendMIDI(ChannelCommand.Controller, 0, 2, bpm);
+        }
+
+        private void DoKick(string arg)
+        {
+          int kick = ParamToCC(arg);
+          SendMIDI(ChannelCommand.Controller, 0, 3, kick);
+        }
+
+        private void DoBass(string arg)
+        {
+          int bass = ParamToCC(arg);
+          SendMIDI(ChannelCommand.Controller, 0, 4, bass);
+        }
+
+        private void DoSynth(string arg)
+        {
+          int synth = ParamToCC(arg);
+          SendMIDI(ChannelCommand.Controller, 0, 5, synth);
+        }
+
+        private void DoDrums(string arg)
+        {
+          int drums = ParamToCC(arg);
+          SendMIDI(ChannelCommand.Controller, 0, 6, drums);
+        }
+
+        private void DoPlay()
+        {
+          if (!playing)
+          {
+            SendMMCCommand(0x02);  // Play
+          }
+
+          playing = true;
+        }
+
+        private void DoStop()
+        {
+           SendMMCCommand(0x01);  // Stop
+           playing = false;
+        }
+
+        private int ParamToCC(string arg)
+        {
+          int val = (int)long.Parse(arg);
+          float f = (float)val / 100f;
+          int cc = (int)(f * 127f);
+
+          if (cc < 0) cc = 0;
+          if (cc > 127) cc = 127;
+
+          return cc;
         }
    
         private void DoTweet(String s)
@@ -185,6 +241,21 @@ namespace SequencerBotTest1
 
             ChannelMessage cm = new ChannelMessage(command, channel, data1, data2);
             outDevice.Send(cm);
+        }
+
+        private void SendMMCCommand(byte command)
+        {
+          byte[] MMC = new byte[6];
+
+          MMC[0] = 0xF0;
+          MMC[1] = 0x7F;
+          MMC[2] = 0x7F;
+          MMC[3] = 0x06;
+          MMC[4] = command;
+          MMC[5] = 0xF7;
+
+          SysExMessage sysex = new SysExMessage(MMC);
+          outDevice.Send(sysex);
         }
     }
 }
