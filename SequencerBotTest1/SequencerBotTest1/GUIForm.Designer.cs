@@ -1,6 +1,6 @@
 ﻿namespace SequencerBotTest1
 {
-    partial class Form1
+    partial class GUIForm
     {
         /// <summary>
         /// Required designer variable.
@@ -38,9 +38,9 @@
       this.OutputLabel.Name = "OutputLabel";
       this.OutputLabel.Size = new System.Drawing.Size(498, 129);
       this.OutputLabel.TabIndex = 2;
-      this.OutputLabel.Text = "label1";
+      this.OutputLabel.Text = "Debug";
       // 
-      // Form1
+      // GUIForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -48,8 +48,9 @@
       this.Controls.Add(this.OutputLabel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
-      this.Name = "Form1";
+      this.Name = "GUIForm";
       this.Text = "Sequencer Bot";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GUIForm_FormClosed);
       this.ResumeLayout(false);
 
         }
