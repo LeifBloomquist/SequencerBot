@@ -28,7 +28,7 @@ namespace SequencerBotTest1
       try
       {
         //Auth.SetUserCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
-        Auth.SetUserCredentials("9Xr6ZtzXFJsX1VbnKj8MGNyVq", "ffvKYeoO8tebOEfLgsBYUsyDPyTQDDlfYW8Ou7ZVoMmVOGHJXG", "716827397945827328-98tFDNfFAFhqhG6DbT9eKjPOdTrHX6Q", "VMmPvX6zUy7NxiMUsGyRKYStHFPTPXztqL9o4cSKDc9DE");
+       
         var authenticatedUser = User.GetAuthenticatedUser();
 
         if (authenticatedUser == null)
