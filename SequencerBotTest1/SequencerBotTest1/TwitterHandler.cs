@@ -28,6 +28,7 @@ namespace SequencerBotTest1
       try
       {
         //Auth.SetUserCredentials("CONSUMER_KEY", "CONSUMER_SECRET", "ACCESS_TOKEN", "ACCESS_TOKEN_SECRET");
+        
        
         var authenticatedUser = User.GetAuthenticatedUser();
 
@@ -39,7 +40,7 @@ namespace SequencerBotTest1
       }
       catch (Exception ex)
       {
-        MessageBox.Show("Exception authenticating user! " + ex.Message);
+        MessageBox.Show("Twitter: Exception authenticating user! " + ex.Message);
         Environment.Exit(-2);
       }
 
@@ -67,6 +68,12 @@ namespace SequencerBotTest1
       String received_message = args.Message.ToString();
       DebugDisplay("Message received: " + received_message);
       parser.ProcessCommand(received_message);
+    }
+
+    public void DoTweet(String s)
+    {
+        var tweet = Tweet.PublishTweet(s);
+        //DebugDisplay("Tweeted: " + s);
     }
 
     private void DebugDisplay(String text)

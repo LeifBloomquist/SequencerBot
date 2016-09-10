@@ -33,6 +33,7 @@ namespace SequencerBotTest1
         if (words[i] == "drums") DoDrums(words[i + 1]);
         if (words[i] == "stop") DoStop();
         if (words[i] == "play") DoPlay();
+        if (words[i] == "start") DoPlay();
       }
     }
 

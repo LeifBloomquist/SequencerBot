@@ -22,12 +22,13 @@ namespace SequencerBotTest1
         {
             InitializeComponent();            
             midi.InitializeMIDI();
-            twitter.LoginandStart(OutputLabel);
-            OutputLabel.Text = "Sequencer Bot ready.";
+            twitter.LoginandStart(OutputLabel);            
+            twitter.DoTweet("Sequencer Bot online at " + DateTime.Now.ToString() + "  This is only a test, do not adjust your set.");
         }
 
         private void GUIForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+          twitter.DoTweet("Sequencer Bot offline at " + DateTime.Now.ToString());
           Environment.Exit(0);
         }             
     }
